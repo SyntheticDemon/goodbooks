@@ -1,0 +1,51 @@
+{% load static %}
+<link rel="stylesheet" href="{%static 'digiapp/styles.css'%}">
+
+<!DOCTYPE html>
+<html>
+
+
+<body>
+    <div class="square">
+        <img style="height:90px;position:absolute;top:30%" src="{%static 'digiapp/images/logo.png'%}">
+
+        <div id="start" class="login main_style " style="top:20%;position:absolute;height:550px;width:400px; border-width:8px ">
+
+
+            <form action="/login/" method="post">{%csrf_token%}
+                <br>
+                <br>
+                <br>
+                <input id="username-field" type="text" name="username" placeholder="Username" style="top:120% ; left: 20%; ; position:relative " class="main_style input-text ">
+                <br>
+
+
+                <input id="password-field1" name="password" type="password" placeholder="Password " style="top:120% ; left: 20%; ; position:relative " class="main_style input-text ">
+                <br>
+
+
+                <em style="top:120% ; left: 53%; ; position:relative ">
+
+                <button style="border-width: 2px;" type="submit" class="main_style button"><p>Login</p> </button>
+                <span  style="color:red;font-size:medium;font-family:Georgia, 'Times New Roman', Times, serif">{{error}}</span>
+                </em>
+            </form>
+            <em style="top:35%; left:-35%; position:relative">
+                    <a href="/signup/" style="text-decoration: none;">
+                    <button  style="border-width: 2px;" onmouseenter="show_second_input()" onmouseleave="hide_second_input()"class="main_style button">Signup</button>
+                    </a>
+            </em>
+
+
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<style>
+
+</style>
+<script type="text/javascript " src="{%static 'digiapp/jsscript.js'%} ">
+</script>
