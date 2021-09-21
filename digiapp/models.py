@@ -5,9 +5,9 @@ from django.db.models.deletion import DO_NOTHING
 from django.db.models.expressions import Subquery
 from django.db.models.fields import DateTimeField
 ColorChoices = (
-    ("GREEN", "green"),
-    ("BLUE", "black"),
-    ("YELLOW", "yellow"),
+    ("GREEN", "Green"),
+    ("BLUE", "Blue"),
+    ("YELLOW", "Yellow"),
     ("RED","Red"),
     ("WHITE", "White"),
     ("BLACK","Black"),
@@ -31,7 +31,7 @@ class Subcat(models.Model):
 class Good(models.Model):
     img_link=models.TextField(max_length=200)
     name=models.TextField(max_length=200)
-    descritpion=models.TextField(max_length=200)
+    descritpion=models.TextField(max_length=2000)
     color=models.CharField(max_length=9,choices=ColorChoices,default="NOCOLOR")
     price=models.IntegerField()
     author=models.TextField(max_length=200)  

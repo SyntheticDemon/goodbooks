@@ -1,0 +1,35 @@
+{%extends 'logged_in.html'%}
+{%load static%}
+
+
+{%block shit%}
+
+
+<div class="sub-container" style="margin-top:2%">
+    <div style="position: absolute; left:40%;font-family:Georgia, 'Times New Roman', Times, serif;border-width:0px;border-style:solid;width:55%;height:100%">
+    <h1>{{book.name}}</h1>
+    <h4 style="line-break: normal;">{{book.descritpion}}
+
+    </h4>
+    <hr style="position:relative;top:40%;opacity:50%">    
+    <div style="position: relative;top:40%;left:5%">
+        <h1>Reviews</h1>
+        {%for review in reviews%}
+
+
+        a
+
+
+        {%endfor%}
+    </div>
+
+        </div>
+    <img src='{{book.img_link}}' style="position:relative;height:250%;width:300%">
+  
+</div>
+
+
+
+
+
+{%endblock shit%}
