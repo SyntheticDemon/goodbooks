@@ -56,7 +56,7 @@ class User(models.Model):
 class Review(models.Model):
     reviewer=models.OneToOneField(User,on_delete=models.CASCADE)
     book=models.ForeignKey(Good,on_delete=DO_NOTHING,related_name="book")
-    rating=models.IntegerField()
+    value=models.IntegerField()
     text=models.CharField(max_length=1000)
     def __str__(self) -> str:
         return self.reviewer.username

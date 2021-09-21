@@ -4,23 +4,16 @@
 
 <head>
     <link rel="stylesheet" href="{%static 'digiapp/styles.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <header>
 
 </header>
+
 <body>
 
-    {%block startblock%}
-
-
-
-
-
-
-    {%endblock startblock%}
-
     <div>
-        
+
         <img style="height:120px;position:absolute;top:2%;left:91.5%" src="{%static 'digiapp/images/logo.png'%}">
         <div>
             <input placeholder="Search for Books" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;">
@@ -42,28 +35,24 @@
         </div>
 
         <div class="shopping-cart" style="position:absloute;padding-left:0px; ">
-            <div onmouseover="gray_it_out()" onmouseleave="white_it_out()" class="category-nav-bar" style="position:relative;left:-17px;top:-40px;"> 
+            <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;">
                 <a href="" style="text-decoration: none;">
                     <div id="Community">Community</div>
                 </a>
             </div>
-            <button class="" style="height:5%;width:50px;position:relative;top:-60px;border-width:1px;border-radius:10px;border-width:2px;">Profile</button>
-            <img src=" {%static 'digiapp/images/shopping-cart.png'%} " style="height:40px;padding-top:0px;position:relative;top:-45px ">
+            <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;">
+                <a href="" style="text-decoration: none;">
+                    <div id="Community">Profile</div>
+                </a>
+            </div> <img src=" {%static 'digiapp/images/shopping-cart.png'%} " style="height:40px;padding-top:0px;position:relative;top:-45px ">
         </div>
     </div>
     <div id="layer" class="background-layer" style="background-color:white;">
-   
-    {%block shit%}
 
-        
+        {%block shit%} {%endblock shit%}
+        <div>
 
+</body>
 
-
-
-    {%endblock shit%}
-    <div>
-
-    </body>
 </html>
 <script src="{%static 'digiapp/jsscript.js'%}"></script>
-

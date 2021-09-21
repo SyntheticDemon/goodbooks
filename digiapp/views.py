@@ -1,4 +1,4 @@
-from django.http.response import Http404, HttpResponse, HttpResponseNotAllowed
+from django.http.response import Http404, HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import redirect, render
 from digiapp.models import Category, Good, Review, Subcat,User
 from django import forms
@@ -57,7 +57,6 @@ def login(request):
         if form.is_valid():
                 entered_username=form.data['username']
                 entered_password=form.data['password']
-
                 target_user=User.objects.filter(username=entered_username)
                 if(len(target_user)==0):
                     return render(request,"login.html",context={'error':'User not Found'})
@@ -101,12 +100,6 @@ def ProductView(request):
     context={'data':product_data}
 
     return render(request,'products.html',context)
-
-def GoodDetailView(request,pk):
-
-    context={'data',Good.objects.all()[pk]}
-
-    return render(request,'goodview.html',context)
 def home_page(request):
     data={'data':get_book_data()}
     if(data):
@@ -134,3 +127,7 @@ def view_subcat_book(request,subcat_name,book_name):
                 'subcat':subcat_query}
 
     return render(request,'book_detailed.html',context=book_data)
+def write_review(request):
+
+    Review
+    return JsonResponse(request.POST)

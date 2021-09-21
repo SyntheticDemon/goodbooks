@@ -26,4 +26,5 @@ urlpatterns = [
        path('homepage/',home_page,name="home_page"),
        path('homepage/subcat/<subcat_name>/<book_name>',view_subcat_book,name="book_detail"),
        path('homepage/subcat/<slug>',view_subcat,name="subcat_route"),
+       path('write_review/',write_review,name="write_review"),
 ] 
