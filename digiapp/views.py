@@ -122,7 +122,7 @@ def view_subcat(request,slug):
                 'data':data,
                 'subcat':subcat_query}
     return render(request,"subcat.html",book_data)
-def view_book(request,book_name):
+def view_subcat_book(request,subcat,book_name):
     book=Good.objects.filter(name=book_name).first()
 
     reviews=Review.objects.filter(book=book)
