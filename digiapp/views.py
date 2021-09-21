@@ -1,6 +1,6 @@
 from django.http.response import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
-from digiapp.models import Category, Good, Subcat,User
+from digiapp.models import Category, Good, Review, Subcat,User
 from django import forms
 from django.contrib.auth.models import User
 from digiapp.forms import *
@@ -116,9 +116,18 @@ def home_page(request):
 
 def view_subcat(request,slug):
     data=get_book_data()
-    subcat_query=Subcat.objects.filter(name=slug)[0]
+    subcat_query=Subcat.objects.filter(name=slug).first()
     books=Good.objects.filter(subcategory=subcat_query)
     book_data={'books':books,
                 'data':data,
                 'subcat':subcat_query}
     return render(request,"subcat.html",book_data)
+def view_book(request,book_name):
+    book=Good.objects.filter(name=book_name).first()
+
+    reviews=Review.objects.filter(book=book)
+
+    book_data={'book_data':book,
+                'reviewes':reviews}
+
+    return render(request,'book_detailed.html',context=book_data)

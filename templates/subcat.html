@@ -12,9 +12,10 @@
 </div>
 {%for book in books%}
 <div class="sub-container">
-
+    <a href="{%url 'detail_book' subcat=subcat.name book_name=book.name %}">
     <img src='{{book.img_link}}' style="position:relative;height:300px;width:200px">
-    <span style="position:relative;top:15%;display:block;text-align:center;">{{book.title}}</span>
+    <span style="position:relative;top:15%;display:block;text-align:center;">{{book.name}}</span>
+    </a>
 </div>
 {%endfor%}
 </div>
