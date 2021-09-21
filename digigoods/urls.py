@@ -24,6 +24,6 @@ urlpatterns = [
        path('signup/',signup,name="signup"),
        path('create_account/',create_account,name="create_account"),
        path('homepage/',home_page,name="home_page"),
-       path('homepage/subcat/<subcat>/<book_name>',view_subcat_book,name="book_detail"),
+       path('homepage/<book_name>',view_subcat_book,name="book_detail"),
        path('homepage/subcat/<slug>',view_subcat,name="subcat_route"),
 ] 
