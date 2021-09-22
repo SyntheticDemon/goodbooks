@@ -130,6 +130,14 @@ def view_subcat_book(request,subcat_name,book_name):
 def write_review(request):
     if(request.method=="POST"):
         new_review_form=ReviewForm(request.POST)
+        if(len(new_review_form.cleaned_data['review_text'])==0 or
+          new_review_form.cleaned_data['score']<1 or
+           new_review_form.cleaned_data['score']>5 or
+            not new_review_form.cleaned_data['scoree'].isdigit()):
+                return HttpResponseRedirect('')
         if new_review_form.is_valid():
-            new_review=Review.objects.create(review_text=forms.data['review_text'],value=forms.data['score'],reviewer=User.objects.get(username=request.user.get_username()))
-    return HttpResponseBadRequest
+            new_review=Review.objects.create(review_text=forms.data['review_text'],
+            value=forms.data['score'],reviewer=User.objects.get(username=request.user.get_username()))
+            new_review.save()
+
+    return HttpResponseRedirect('')
