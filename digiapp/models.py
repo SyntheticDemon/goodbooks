@@ -59,4 +59,4 @@ class Review(models.Model):
     value=models.IntegerField()
     review_text=models.CharField(max_length=1000)
     def __str__(self) -> str:
-        return self.reviewer.username
+        return self.reviewer.username+"'s"+" review"

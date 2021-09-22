@@ -1,4 +1,4 @@
-from django.http.response import Http404, HttpResponse, HttpResponseNotAllowed, JsonResponse
+from django.http.response import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import redirect, render
 from digiapp.models import Category, Good, Review, Subcat,User
 from django import forms
@@ -129,8 +129,7 @@ def view_subcat_book(request,subcat_name,book_name):
     return render(request,'book_detailed.html',context=book_data)
 def write_review(request):
     if(request.method=="POST"):
-        new_review=ReviewForm(request.POST)
-
-        if (new_review.is_valid):
-            return HttpResponseRedirect('')
-    return Http404
+        new_review_form=ReviewForm(request.POST)
+        if new_review_form.is_valid():
+            new_review=Review.objects.create(review_text=forms.data['review_text'],value=forms.data['score'],reviewer=User.objects.get(username=request.user.get_username()))
+    return HttpResponseBadRequest
