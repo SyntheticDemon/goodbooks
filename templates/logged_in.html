@@ -1,0 +1,58 @@
+{% load static %}
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="{%static 'digiapp/styles.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<header>
+
+</header>
+
+<body>
+
+    <div>
+
+        <img style="height:120px;position:absolute;top:2%;left:91.5%" src="{%static 'digiapp/images/logo.png'%}">
+        <div>
+            <input placeholder="Search for Books" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;">
+        </div>
+        <div class="header-first" style="position:absolute;top:0;z-index: 0;left:0%; border-radius:0px;height:18%">
+            {%for category in data%}
+            <div onmouseover="gray_it_out()" onmouseleave="white_it_out()" class="category-nav-bar">{{category.cat.name}} {%for subcat in category.subcat%}
+                <a href="{%url 'subcat_route' subcat.name%}" style="text-decoration: none;">
+                    <div id={{subcat.name}} class="dropdown" style="position: relative;top:50%;left:-0%">{{subcat.name}}</div>
+                    <div class="background" style="position: relative;margin-top:-50px;top:40%;">
+
+                    </div>
+                </a>
+                {%endfor%}
+
+            </div>
+
+            {%endfor%}
+        </div>
+
+        <div class="shopping-cart" style="position:absloute;padding-left:0px; ">
+            <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;">
+                <a href="" style="text-decoration: none;">
+                    <div id="Community">Community</div>
+                </a>
+            </div>
+            <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;">
+                <a href="" style="text-decoration: none;">
+                    <div id="Community">Profile</div>
+                </a>
+            </div> <img src=" {%static 'digiapp/images/shopping-cart.png'%} " style="height:40px;padding-top:0px;position:relative;top:-45px ">
+        </div>
+    </div>
+    <div id="layer" class="background-layer" style="background-color:white;">
+
+        {%block shit%} {%endblock shit%}
+        <div>
+
+</body>
+
+</html>
+<script src="{%static 'digiapp/jsscript.js'%}"></script>

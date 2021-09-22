@@ -1,0 +1,74 @@
+{%extends 'logged_in.html'%} {%load static%} {%block shit%}
+
+
+<div class="sub-container" style="margin-top:2%">
+    <div style="position: absolute; left:40%;font-family:Georgia, 'Times New Roman', Times, serif;border-width:0px;border-style:solid;top:20%;width:40%;height:600px">
+        <h1>{{book.name}}</h1>
+        <h4 style="line-break: normal;line-height :25px">{{book.descritpion}}</h4>
+        <div style="position:absolute;top:120%;">
+            <hr left:0px>
+            <form id="review-form" method="post">{%csrf_token%}
+                <br>
+                <textarea id="username-field" type="text" name="review_text" placeholder="Your Review" style="top:120% ; position:relative ;" class="main_style review-box "></textarea>
+                <button type="submit" class="button" style="position:relative;left:85%;font-size: small;">Send Review</button>
+                <div id="rating" clicked="false">
+                    <span onclick="rate('rating',0)" class=" fa fa-star "> </span>
+                    <span onclick="rate('rating',1)" class=" fa fa-star "> </span>
+                    <span onclick="rate('rating',2)" class=" fa fa-star "> </span>
+                    <span onclick="rate('rating',3)" class=" fa fa-star "> </span>
+                    <span onclick="rate('rating',4)" class=" fa fa-star "> </span>
+                </div>
+                <input style="display:none; " value="" id="score" name="score">
+            </form>
+            <span id="review-errors"></span>
+            <hr>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    // catch the form's submit event
+                    $('#review-form').submit(function() {
+                        // create an AJAX call
+                        $.ajax({
+                            data: $(this).serialize(), // get the form data
+                            type: $(this).attr('method'), // GET or POST
+                            url: "/write_review/",
+                            // on success
+                            success: function(response) {
+                                if (response['errors'] != null) {
+                                    document.getElementById("review-errors").innerText = response['errors']
+                                    document.getElementById("review-errors").style = "font-size:medium;color:red;transition:all 3s;"
+
+                                } else {
+                                    document.getElementById("review-errors").innerText = responsep['success']
+                                    document.getElementById("review-errors").style = "font-size:medium;color:red;transition:all 3s;"
+                                }
+                            },
+                            error: function(response) {
+                                // alert the error if any error occured
+                                $('#review-errors').attr(Text) = response['errors']
+                            }
+                        });
+                        return false;
+                    });
+                })
+            </script>
+        </div>
+        <div style="position: absolute;left:0%;top:100% ">
+            <h1>Reviews</h1>
+            {%for review in reviews%}
+            <div style="border-width:10px;border-style:20px; "></div>
+
+
+            {%endfor%}
+        </div>
+
+    </div>
+    <img src='{{book.img_link}}' style="position:relative;height:250%;width:300% ">
+
+</div>
+
+
+
+
+
+{%endblock shit%}

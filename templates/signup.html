@@ -1,0 +1,51 @@
+{% load static %}
+<link rel="stylesheet" href="{%static 'digiapp/styles.css'%}">
+
+<!DOCTYPE html>
+<html>
+
+
+<body>
+
+    <div class="square">
+        <img style="height:90px;position:absolute;top:30%" src="{%static 'digiapp/images/logo.png'%}">
+
+        <div id="start" class="login main_style " style="top:20%;position:absolute;height:550px;width:400px; border-width:8px ">
+
+
+            <form action="/create_account/" method="post">{%csrf_token%}
+                <br>
+                <br>
+                <br>
+                <input id="username-field" type="text" name="username" placeholder="Username" style="top:120% ; ; position:relative " class="main_style input-text ">
+                <br>
+
+
+                <input id="password-field1" name="password" type="password" placeholder="Password " style="margin-left:0px" class="main_style input-text ">
+
+                <br>
+                <input id="password-field2" name="confirm_password" type="password" placeholder="Confirm Password " style="margin-left:0px" class="main_style input-text ">
+
+
+                <em style="top: 100px ; left: 100px; ; position:relative ">
+               
+                    <button type="submit" class="main_style button"><p>Signup</p> </button>
+                    <span style="color:red;font-size:medium;position:relative;left:0%">{{error}}</span>
+                </em>
+
+
+
+            </form>
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<style>
+
+</style>
+<script type="text/javascript " src="{%static 'digiapp/jsscript.js'%} ">
+</script>
