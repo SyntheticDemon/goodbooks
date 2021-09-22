@@ -128,6 +128,9 @@ def view_subcat_book(request,subcat_name,book_name):
 
     return render(request,'book_detailed.html',context=book_data)
 def write_review(request):
+    if(request.method=="POST"):
+        new_review=ReviewForm(request.POST)
 
-    Review
-    return JsonResponse(request.POST)
+        if (new_review.is_valid):
+            return HttpResponseRedirect('')
+    return Http404
