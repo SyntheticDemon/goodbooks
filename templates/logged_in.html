@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="{%static 'digiapp/styles.css'%}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<header>
 
-</header>
 
 <body>
 
@@ -35,19 +33,24 @@
         </div>
 
         <div class="shopping-cart" style="position:absloute;padding-left:0px; ">
-            <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;">
-                <a href="" style="text-decoration: none;">
-                    <div id="Community">Community</div>
-                </a>
-            </div>
-            <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;">
-                <a href="" style="text-decoration: none;">
-                    <div id="Community">Profile</div>
-                </a>
-            </div> <img src=" {%static 'digiapp/images/shopping-cart.png'%} " style="height:40px;padding-top:0px;position:relative;top:-45px ">
+            <a href=" " style="text-decoration: none; ">
+                <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;z-index:2">
+
+                    Community
+
+                </div>
+            </a>
+            <a href="/profile" style="text-decoration: none; ">
+                <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;z-index:2">
+
+                    Profile
+
+                </div>
+            </a>
+            <img src=" {%static 'digiapp/images/shopping-cart.png'%} " style="height:40px;padding-top:0px;left:15%;position:absolute;top:2.3% ">
         </div>
     </div>
-    <div id="layer" class="background-layer" style="background-color:white;">
+    <div id="layer " class="background-layer " style="background-color:white; ">
 
         {%block shit%} {%endblock shit%}
         <div>
@@ -55,4 +58,4 @@
 </body>
 
 </html>
-<script src="{%static 'digiapp/jsscript.js'%}"></script>
+<script src="{%static 'digiapp/jsscript.js'%} "></script>

@@ -9,6 +9,3 @@ class RegisterationForm(forms.Form):
 class LoginForm(forms.Form):
     username=forms.CharField(max_length=200)
     password=forms.CharField(max_length=200)
-class ReviewForm(forms.Form):
-    review_text=forms.CharField(min_length=100,max_length=20)
-    score=forms.IntegerField(min_value=1,max_value=5)   

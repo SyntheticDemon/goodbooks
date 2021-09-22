@@ -1,8 +1,11 @@
+from time import localtime
+from django.db.models.fields import DateTimeField
 from django.http.response import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import redirect, render
 from digiapp.models import Category, Good, Review, Subcat,User
 from django import forms
 from django.contrib.auth.models import User
+import datetime
 from digiapp.forms import *
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
@@ -94,12 +97,8 @@ def create_account(request):
                     return HttpResponseRedirect('/homepage')
 
     return HttpResponseRedirect('/home',200)
-def ProductView(request): 
-    product_data=Good.objects.all()
 
-    context={'data':product_data}
 
-    return render(request,'products.html',context)
 def home_page(request):
     data={'data':get_book_data()}
     if(data):
@@ -124,23 +123,37 @@ def view_subcat_book(request,subcat_name,book_name):
     book_data={'books':books,
                 'data':data,
                 'book':book,
-                'subcat':subcat_query}
+                'subcat':subcat_query,
+                'reviews':reviews}
 
     return render(request,'book_detailed.html',context=book_data)
+def change_review(request,prev_review):
+    pass
 def write_review(request):
-    if(request.method=="POST"):
-        new_review_form=ReviewForm(request.POST)
-        if(len(new_review_form.data['review_text'])==0 or
-          int(new_review_form.data['score'])<1 or
-           int(new_review_form.data['score'])>5 or
-            not new_review_form.data['score'].isdigit()):
-                return JsonResponse({"errors":"Error bad info"})
-        if new_review_form.is_valid():
-                new_review=Review.objects.create(review_text=new_review_form.data['review_text'],
-                value=new_review_form.data['score'],reviewer=User.objects.get(username=request.user.get_username()))
-                new_review.save()
-                return JsonResponse({"success":"Review"})
-        else:
-                return JsonResponse({"errors":"Error bad info"})
+    review_text=request.POST['review_text']
+    user=User.objects.get(username=request.user.username)
+    book_name=request.POST['book_name']
+    writing_date=datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
 
-    return JsonResponse({"errors":"Error bad info"})
+    related_book=0
+    try:
+        related_book=Good.objects.get(name=book_name)
+    except:
+        return JsonResponse({"errors":"Book not Found"})
+    try:
+        review_score=int(request.POST['score'])
+        if(review_score>5 or review_score<1):
+           return JsonResponse({"errors":"Invalid Score  Please try again"})
+    except:
+        return JsonResponse({"errors":"Invalid Score Type Please try again"})
+    if(len(review_text)==0):
+        return JsonResponse({"errors":"Invalid Text Please try again"})
+
+    else:
+        prev_review=Review.objects.filter(book=related_book)
+        if(len(prev_review)==0):
+            new_review=Review(review_text=review_text,value=review_score,book=related_book,reviewer=user,written_date=writing_date)
+            new_review.save()
+            return JsonResponse({"success":"Review Submitted"})
+        else:
+            return JsonResponse({"errors":"Other review found , please change that one"})

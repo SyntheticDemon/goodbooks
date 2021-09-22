@@ -3,7 +3,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db.models.deletion import DO_NOTHING
 from django.db.models.expressions import Subquery
-from django.db.models.fields import DateTimeField
+from django.db.models.fields import DateTimeField, IntegerField
 ColorChoices = (
     ("GREEN", "Green"),
     ("BLUE", "Blue"),
@@ -45,7 +45,7 @@ class ShoppingCart(models.Model):
     checkout_price=models.IntegerField(default=0)
     checked_out=models.BooleanField(default=False)
     
-class User(models.Model):
+class MyUser(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     dated_joined=DateTimeField(auto_created=True)
     address=models.TextField(max_length=200)
@@ -54,9 +54,11 @@ class User(models.Model):
     def __str__(self) -> str:
         return self.username
 class Review(models.Model):
-    reviewer=models.OneToOneField(User,on_delete=models.CASCADE)
+
+    reviewer=models.ForeignKey(User,on_delete=models.CASCADE)
     book=models.ForeignKey(Good,on_delete=DO_NOTHING,related_name="book")
     value=models.IntegerField()
     review_text=models.CharField(max_length=1000)
+    written_date=models.TextField()
     def __str__(self) -> str:
-        return self.reviewer.username+"'s"+" review"
+        return self.reviewer.username+"'s"+" review"+"on "+ self.book.name
