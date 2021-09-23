@@ -1,0 +1,36 @@
+{%extends 'logged_in.html'%}
+{%load static%}
+<head >
+    <link rel="stylesheet" href="{%static 'digiapp/styles.css'%}">
+</head>
+<body>
+
+    <div>
+        {%block sidebar%}
+        <div id="Profile" class="address-container">
+                Profile
+        </div>
+
+            </div>
+                <div >
+
+                <div id="side-bar" class="side-bar" style="left:86%;position:relative;top:20%">
+                    <ul class="profile-column" style="height:30px;display: block;" >
+                        Account
+                    </ul>    
+                    <ul class="profile-column" style="height:30px;display: block;" >
+                        Privacy
+                    </ul>    
+                    <ul class="profile-column" style="height:30px;display: block;" >
+                        Messages
+                    </ul>    
+                    <ul class="profile-column" style="height:30px;display: block;" >
+                        Notificiations
+                    </ul>    
+                </div>
+
+            </div>
+        {%endblock sidebar%}
+
+    </div>
+</body>
