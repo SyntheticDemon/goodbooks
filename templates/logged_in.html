@@ -9,7 +9,7 @@
 
 
 <body>
-
+    
     <div>
 
         <img style="height:120px;position:absolute;top:2%;left:91.5%" src="{%static 'digiapp/images/logo.png'%}">
@@ -36,21 +36,25 @@
         </div>
 
         <div class="shopping-cart" style="position:absloute;padding-left:0px;">
-            <a href=" " style="text-decoration: none; ">
+            <a href="/community" style="text-decoration: none;color:black  ">
                 <div class="category-nav-bar" style="position:relative;left:-17px;top:-100px;z-index:2">
 
                     Community
 
                 </div>
             </a>
-            <a href="/profile" style="text-decoration: none; ">
-                <div class="category-nav-bar" style="position:relative;left:-17px;top:-100px;z-index:2">
+            <a href="/profile" style="text-decoration: none;color:black ">
+                <div class="category-nav-bar" style="text-decoration:none;position:relative;left:-17px;top:-100px;z-index:2" aria-placeholder="">
 
                     Profile
-                    {{request.user.username}}
 
                 </div>
             </a>
+            <div  style="font-size:13px;position:relative;left:0px;top:-100px;z-index:2">
+
+                   logged in as {{request.user.username}}
+
+            </div>
             <img src=" {%static 'digiapp/images/shopping-cart.png'%} " style="height:40px;padding-top:0px;left:15%;position:absolute;top:2.3% ">
         </div>
     </div>
