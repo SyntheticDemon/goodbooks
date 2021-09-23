@@ -14,7 +14,10 @@
 
         <img style="height:120px;position:absolute;top:2%;left:91.5%" src="{%static 'digiapp/images/logo.png'%}">
         <div>
-            <input placeholder="Search for Books" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;">
+            <form id="search-form" method="GET"> 
+            <input name="search-text" placeholder="Search for Books" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;">
+            <button type="submit" class="button" style="z-index: 1;position:relative;top:5%;left: 83.5%;">Search</button>
+            </form>
         </div>
         <div class="header-first" style="position:absolute;top:0;z-index: 0;left:0%; border-radius:0px;height:18%">
             {%for category in data%}
@@ -32,18 +35,19 @@
             {%endfor%}
         </div>
 
-        <div class="shopping-cart" style="position:absloute;padding-left:0px; ">
+        <div class="shopping-cart" style="position:absloute;padding-left:0px;">
             <a href=" " style="text-decoration: none; ">
-                <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;z-index:2">
+                <div class="category-nav-bar" style="position:relative;left:-17px;top:-100px;z-index:2">
 
                     Community
 
                 </div>
             </a>
             <a href="/profile" style="text-decoration: none; ">
-                <div class="category-nav-bar" style="position:relative;left:-17px;top:-40px;z-index:2">
+                <div class="category-nav-bar" style="position:relative;left:-17px;top:-100px;z-index:2">
 
                     Profile
+                    {{request.user.username}}
 
                 </div>
             </a>

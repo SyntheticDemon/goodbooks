@@ -1,15 +1,17 @@
 from time import localtime
+from django.contrib.auth.signals import user_logged_in
 from django.db.models.fields import DateTimeField
 from django.http.response import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import redirect, render
-from digiapp.models import Category, Good, Review, Subcat,User
+from digiapp.models import Category, Good, MyUser, Review, Subcat,User
 from django import forms
 from django.contrib.auth.models import User
 import datetime
+from django.contrib.auth import authenticate, login
 from digiapp.forms import *
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
-
+from itertools import chain
 def get_book_data():
     class Cat:
         def __init__(self,cat,subcat):
@@ -32,9 +34,6 @@ def password_check(passwd):
       
     if len(passwd) < 8:
         return ('length should be at least 8',False)
-
-    if len(passwd) > 20:
-        return('length should be not be greater than 8',False)
   
     if not any(char.isdigit() for char in passwd):
         return('Password should have at least one numeral',False)
@@ -44,16 +43,23 @@ def password_check(passwd):
           
     if not any(char.islower() for char in passwd):
         return('Password should have at least one lowercase letter',False)
-          
-  
+
     if val:
         return ('True',True)
 
 def home_view(request):
-
+    
     return render(request,'login.html')
-
-def login(request):
+def book_search(request):
+    term=request['search_text']
+    first_search_query=Good.objects.filter(name__unaccent__icontains=term)
+    second_search_query=Good.objects.filter(description__unaccent__icontains=term)
+    full_query_set=list(chain(first_search_query,second_search_query))
+    if(len(full_query_set)==0):
+        return JsonResponse({"not_found":"No Good Matches for your search"})
+    else:
+        return JsonResponse(full_query_set)
+def view_login(request):
 
     if(request.method=="POST"):
         form=LoginForm(request.POST)
@@ -64,12 +70,14 @@ def login(request):
                 if(len(target_user)==0):
                     return render(request,"login.html",context={'error':'User not Found'})
                 else:
+                    correct_credentials=authenticate(request,username=entered_username,password=entered_password)
+                    login(request,user=correct_credentials)
                     if(target_user[0].is_active):
-                        
-                        if(check_password(entered_password,encoded=target_user[0].password)):
+                        if(correct_credentials):
                             return render(request,'logged_in.html',{'data':get_book_data()})
                         else:
                             return render(request,"login.html",context={'error':'Wrong password Try again'})
+
     return render(request,"login.html",context={'error':'Sent Data was not valid please try again'})
 
 def signup(request):
@@ -150,7 +158,7 @@ def write_review(request):
         return JsonResponse({"errors":"Invalid Text Please try again"})
 
     else:
-        prev_review=Review.objects.filter(book=related_book)
+        prev_review=Review.objects.filter(book=related_book).filter(reviewer=user)
         if(len(prev_review)==0):
             new_review=Review(review_text=review_text,value=review_score,book=related_book,reviewer=user,written_date=writing_date)
             new_review.save()
