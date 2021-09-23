@@ -9,15 +9,52 @@
 
 
 <body>
-    
+
     <div>
 
         <img style="height:120px;position:absolute;top:2%;left:91.5%" src="{%static 'digiapp/images/logo.png'%}">
         <div>
             <form id="search-form" method="GET"> 
             <input name="search-text" placeholder="Search for Books" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;">
-            <button type="submit" class="button" style="z-index: 1;position:relative;top:5%;left: 83.5%;">Search</button>
+                        <button type="submit" class="button" style="z-index: 1;position:relative;top:5%;left: 83.5%;">Go</button>
+
+            <span  placeholder="Search results" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;height:400px">
+            </span>
             </form>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    // catch the form's submit event
+                    $('#search-form').submit(function() {
+                        // create an AJAX call
+                        $.ajax({
+                            data: $(this).serialize(), // get the form data
+                            type: $(this).attr('method'), // GET or POST
+                            url: "/search/",
+                            // on success
+                            success: function(response) {
+                                if (response['empty'] != null) {
+                                    
+                
+                                } else if (response['query_result'] != null) {
+                               
+                                } else {
+                                    document.getElementById("review-errors").innerText = response['data']
+                                }
+                            },
+                            error: function(response) {
+                                // alert the error if any error occured
+                                document.getElementById("review-errors").innerText = "Server Did not Respond ,Check your Connection"
+                                document.getElementById("review-errors").style.color = "red"
+                            }
+                        });
+                        document.getElementById("review-errors").style.display = "block"
+                
+                        return false;
+                    });
+                })
+            </script>
         </div>
         <div class="header-first" style="position:absolute;top:0;z-index: 0;left:0%; border-radius:0px;height:18%">
             {%for category in data%}
@@ -35,28 +72,27 @@
             {%endfor%}
         </div>
 
-        <div class="shopping-cart" style="position:absloute;padding-left:0px;">
             <a href="/community" style="text-decoration: none;color:black  ">
-                <div class="category-nav-bar" style="position:relative;left:-17px;top:-100px;z-index:2">
+                <div class="category-nav-bar" style="position:absolute;left:-17px;top:2%;z-index:2">
 
                     Community
 
                 </div>
             </a>
             <a href="/profile" style="text-decoration: none;color:black ">
-                <div class="category-nav-bar" style="text-decoration:none;position:relative;left:-17px;top:-100px;z-index:2" aria-placeholder="">
+                <div class="category-nav-bar" style="position:absolute;left:5%;top:2%;z-index:2" aria-placeholder="">
 
                     Profile
-
+                    <div style="position:relative;font-size: small;left:110%">
+                    {{request.user.username}}
+                   </div>
                 </div>
             </a>
-            <div  style="font-size:13px;position:relative;left:0px;top:-100px;z-index:2">
+       
 
-                   logged in as {{request.user.username}}
+                 
 
-            </div>
-            <img src=" {%static 'digiapp/images/shopping-cart.png'%} " style="height:40px;padding-top:0px;left:15%;position:absolute;top:2.3% ">
-        </div>
+     
     </div>
     <div id="layer " class="background-layer " style="background-color:white; ">
 
@@ -64,6 +100,10 @@
         <div>
 
 </body>
+{%block sidebar%}
 
+
+
+{%endblock sidebar%}
 </html>
 <script src="{%static 'digiapp/jsscript.js'%} "></script>

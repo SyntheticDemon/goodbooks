@@ -59,6 +59,11 @@ def book_search(request):
         return JsonResponse({"not_found":"No Good Matches for your search"})
     else:
         return JsonResponse(full_query_set)
+def view_profile(request):
+    data={'data':get_book_data()}
+
+
+    return render(request,'profile.html',context=data)
 def view_login(request):
 
     if(request.method=="POST"):
