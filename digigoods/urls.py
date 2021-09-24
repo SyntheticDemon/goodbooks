@@ -29,4 +29,5 @@ urlpatterns = [
        path('homepage/subcat/<slug>',view_subcat,name="subcat_route"),
        path('write_review/',write_review,name="write_review"),
        path('profile/',view_profile,name="profile_view"),
+       path('search/',book_search,name="book_search")
 ] 

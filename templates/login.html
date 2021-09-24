@@ -3,14 +3,16 @@
 
 <!DOCTYPE html>
 <html>
-
+<head> 
+       <meta name="viewport" content="width=1920px, initial-scale=1.0">
+</head>
 
 <body>
     <div class="square">
         <img style="height:90px;position:absolute;top:30%" src="{%static 'digiapp/images/logo.png'%}">
 
         <div id="start" class="login main_style " style="top:20%;position:absolute;height:550px;width:400px; border-width:8px ">
-
+            
 
             <form action="/login/" method="post">{%csrf_token%}
                 <br>

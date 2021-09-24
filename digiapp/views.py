@@ -51,14 +51,14 @@ def home_view(request):
     
     return render(request,'login.html')
 def book_search(request):
-    term=request['search_text']
-    first_search_query=Good.objects.filter(name__unaccent__icontains=term)
-    second_search_query=Good.objects.filter(description__unaccent__icontains=term)
+    search_text=request.POST['search-text']
+    first_search_query=Good.objects.filter(name__icontains=search_text)
+    second_search_query=Good.objects.filter(descritpion__icontains=search_text)
     full_query_set=list(chain(first_search_query,second_search_query))
     if(len(full_query_set)==0):
         return JsonResponse({"not_found":"No Good Matches for your search"})
     else:
-        return JsonResponse(full_query_set)
+        return JsonResponse({"data":full_query_set})
 def view_profile(request):
     data={'data':get_book_data()}
 

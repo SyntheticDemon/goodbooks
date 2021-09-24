@@ -3,6 +3,8 @@
 <html>
 
 <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{%static 'digiapp/styles.css'%}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,16 +16,20 @@
 
         <img style="height:120px;position:absolute;top:2%;left:91.5%" src="{%static 'digiapp/images/logo.png'%}">
         <div>
-            <form id="search-form" method="GET"> 
-            <input name="search-text" placeholder="Search for Books" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;">
-                        <button type="submit" class="button" style="z-index: 1;position:relative;top:5%;left: 83.5%;">Go</button>
+            <form id="search-form" method="POST">{%csrf_token%}
+            <input oninput="hide_search_bar()" name="search-text" id="search-text" placeholder="Search for Books" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;">
+            <button type="submit" class="button" style="z-index: 1;position:relative;top:5%;left: 86%;width:50px">Go</button>
 
-            <span  placeholder="Search results" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;height:400px">
+            <span id="search-result" placeholder="Search results" class="search-bar main_style " style="display:none;background-color:rgb(212, 212, 212);z-index: 1;margin-top:5px;top:6%;width:550px;left: 60%;height:400px;transition:all 3s">
             </span>
             </form>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script>
+                function hide_search_bar(){
+                    document.getElementById("search-result").style.display="none"
+                    console.log("pooria")
+                }
                 $(document).ready(function() {
                     // catch the form's submit event
                     $('#search-form').submit(function() {
@@ -34,22 +40,16 @@
                             url: "/search/",
                             // on success
                             success: function(response) {
-                                if (response['empty'] != null) {
-                                    
-                
-                                } else if (response['query_result'] != null) {
-                               
-                                } else {
-                                    document.getElementById("review-errors").innerText = response['data']
-                                }
+
+                                document.getElementById("search-result").style.display="block"
+
+                                
                             },
                             error: function(response) {
                                 // alert the error if any error occured
-                                document.getElementById("review-errors").innerText = "Server Did not Respond ,Check your Connection"
-                                document.getElementById("review-errors").style.color = "red"
+                    
                             }
                         });
-                        document.getElementById("review-errors").style.display = "block"
                 
                         return false;
                     });
