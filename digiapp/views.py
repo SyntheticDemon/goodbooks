@@ -53,13 +53,10 @@ def home_view(request):
     
     return render(request,'login.html')
 def book_search(request):
-    search_text=request.POST['search-text']
-    second_query=Good.objects.filter(description__icontains=search_text)
-    results= [result.as_json_search_response() for result in second_query]
-    if(len(list(second_query))==0):
-        return JsonResponse({"not_found":"No Good Matches for your search"},safe=False)
-    else:
-        return  HttpResponse(json.dumps(results), content_type="application/json")
+    query_text=request.POST['search-text']
+    model_results=Good.objects.filter(description__icontains=query_text)
+    results= [result.as_json_search_response() for result in model_results]
+    return  HttpResponse(json.dumps(results), content_type="application/json")
 def view_profile(request):
     data={'data':get_book_data()}
 

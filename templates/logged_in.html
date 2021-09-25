@@ -13,77 +13,49 @@
 <body>
 
     <div>
-        <div id="search_result_container" style="display:none">
-            <ul name="image-link"></ul>
-            <ul name="title"></ul>
+
+        <div id="search-result-container" style="background-color:rgb(238, 238, 238);box-shadow:50px;padding:10px   ;display:none;float:inline-start" >
+
+            <ul name="image-link" style="position: absolute;left:0%"></ul>
+            <span style="position: absolute;top:0% ;left:10%">
+            <h3><ul name="title"></ul></h3>
+            <h6>
             <ul name="description"> </ul>
+            </h6>
+            </span >
         </div>
+
         <img style="height:120px;position:absolute;top:2%;left:91.5%" src="{%static 'digiapp/images/logo.png'%}">
+
         <div>
             <form id="search-form" method="POST">{%csrf_token%}
+         
             <input oninput="hide_search_bar()" name="search-text" id="search-text" placeholder="Search for Books" class="search-bar main_style " style="z-index: 1;top:5%;width:550px;left: 60%;">
+        
             <button type="submit" class="button" style="z-index: 1;position:relative;top:5%;left: 86%;width:50px">Go</button>
 
-            <span id="search-result" placeholder="Search results" class="search-bar main_style " style="display:none;background-color:rgb(212, 212, 212);z-index: 1;margin-top:5px;top:6%;width:550px;left: 60%;height:400px;transition:all 3s">
-            </span>
-            </form>
-
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script>
-                function construct_search_result_element(json_data){
-                    let element =document.getElementById("search_result_container")
-                    let elements =element.getElementsByTagName("ul")
-                    elements[0].innerHTML=json_data['image_link']
-                    elements[1].innerHTML=json_data['name']
-                    elements[2].innerHTML=json_data['description']
-                    element.style.display="block"
-                    return element
-                }
-                function hide_search_bar(){
-                    document.getElementById("search-result").style.display="none"
-                }
-                $(document).ready(function() {
-                    // catch the form's submit event
-                    $('#search-form').submit(function() {
-                        // create an AJAX call
-                        $.ajax({
-                            data: $(this).serialize(), // get the form data
-                            type: $(this).attr('method'), // GET or POST
-                            url: "/search/",
-                            // on success
-                            success: function(response) {
-                            
-                                console.log(response)
-                                document.getElementById("search-result").style.display="block"
-                                for (let result of response){
-                                    document.getElementById("search-result").appendChild(construct_search_result_element(result))
-                                }
-                                
-                            },
-                            error: function(response) {
-                                // alert the error if any error occured
-                    
-                            }
-                        });
                 
-                        return false;
-                    });
-                })
-            </script>
+            <span id="search-result" placeholder="Search results" class="search-bar main_style " style="display:none;background-color:rgba(212, 212, 212, 0.486);z-index: 1;margin-top:5px;top:6%;width:550px;left: 60%;height:400px;transition:all 3s">
+           
+            </span>
+
+            </form>
+          
         </div>
+
         <div class="header-first" style="position:absolute;top:0;z-index: 0;left:0%; border-radius:0px;height:18%">
             {%for category in data%}
             <div  class="category-nav-bar">{{category.cat.name}} {%for subcat in category.subcat%}
                 <a href="{%url 'subcat_route' subcat.name%}" style="text-decoration: none;">
+                 
                     <div id={{subcat.name}} class="dropdown" style="position: relative;top:50%;left:-0%">{{subcat.name}}</div>
+                  
                     <div class="background" style="position: relative;margin-top:-50px;top:40%;">
 
                     </div>
                 </a>
                 {%endfor%}
-
             </div>
-
             {%endfor%}
         </div>
 
@@ -95,13 +67,19 @@
                 </div>
             </a>
             <a href="/profile" style="text-decoration: none;color:black ">
+
                 <div class="category-nav-bar" style="position:absolute;left:5%;top:2%;z-index:2" aria-placeholder="">
 
                     Profile
+
                     <div style="position:relative;font-size: small;left:110%">
+
                     {{request.user.username}}
+
                    </div>
+
                 </div>
+
             </a>
        
 
@@ -111,7 +89,10 @@
     </div>
     <div id="layer " class="background-layer " style="background-color:white; ">
 
-        {%block shit%} {%endblock shit%}
+        {%block shit%} 
+        
+        {%endblock shit%}
+
         <div>
 
 </body>
@@ -122,3 +103,4 @@
 {%endblock sidebar%}
 </html>
 <script src="{%static 'digiapp/jsscript.js'%} "></script>
+<script src="{%static 'digiapp/search-ajax.js'%} "></script>

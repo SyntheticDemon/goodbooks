@@ -29,7 +29,7 @@ class Subcat(models.Model):
     def __str__(self) -> str:
         return self.name    
 class Good(models.Model):
-    img_link=models.TextField(max_length=200)
+    img_link=models.CharField(max_length=2000)
     name=models.TextField(max_length=200)
     description=models.TextField(max_length=2000)
     color=models.CharField(max_length=9,choices=ColorChoices,default="NOCOLOR")
@@ -41,8 +41,8 @@ class Good(models.Model):
     def __str__(self) -> str:
         return self.name
     def as_json_search_response(self):
-        return dict(img_link=self.img_link,name=self.name,description=self.description)
-        
+        return dict(img_link=(self.img_link),name=self.name,description=(self.description)[:300]+"...")
+
 class ShoppingCart(models.Model):   
     shopping_list=models.ForeignKey(Good,models.CASCADE,related_name='shopping_list')
     checkout_price=models.IntegerField(default=0)
