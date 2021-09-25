@@ -31,7 +31,7 @@ class Subcat(models.Model):
 class Good(models.Model):
     img_link=models.TextField(max_length=200)
     name=models.TextField(max_length=200)
-    descritpion=models.TextField(max_length=2000)
+    description=models.TextField(max_length=2000)
     color=models.CharField(max_length=9,choices=ColorChoices,default="NOCOLOR")
     price=models.IntegerField()
     author=models.TextField(max_length=200)  
@@ -40,7 +40,10 @@ class Good(models.Model):
     tags=[]
     def __str__(self) -> str:
         return self.name
-class ShoppingCart(models.Model):
+    def as_json_search_response(self):
+        return dict(img_link=self.img_link,name=self.name,description=self.description)
+        
+class ShoppingCart(models.Model):   
     shopping_list=models.ForeignKey(Good,models.CASCADE,related_name='shopping_list')
     checkout_price=models.IntegerField(default=0)
     checked_out=models.BooleanField(default=False)

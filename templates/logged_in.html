@@ -13,7 +13,11 @@
 <body>
 
     <div>
-
+        <div id="search_result_container" style="display:none">
+            <ul name="image-link"></ul>
+            <ul name="title"></ul>
+            <ul name="description"> </ul>
+        </div>
         <img style="height:120px;position:absolute;top:2%;left:91.5%" src="{%static 'digiapp/images/logo.png'%}">
         <div>
             <form id="search-form" method="POST">{%csrf_token%}
@@ -26,9 +30,17 @@
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script>
+                function construct_search_result_element(json_data){
+                    let element =document.getElementById("search_result_container")
+                    let elements =element.getElementsByTagName("ul")
+                    elements[0].innerHTML=json_data['image_link']
+                    elements[1].innerHTML=json_data['name']
+                    elements[2].innerHTML=json_data['description']
+                    element.style.display="block"
+                    return element
+                }
                 function hide_search_bar(){
                     document.getElementById("search-result").style.display="none"
-                    console.log("pooria")
                 }
                 $(document).ready(function() {
                     // catch the form's submit event
@@ -40,9 +52,12 @@
                             url: "/search/",
                             // on success
                             success: function(response) {
-
+                            
+                                console.log(response)
                                 document.getElementById("search-result").style.display="block"
-
+                                for (let result of response){
+                                    document.getElementById("search-result").appendChild(construct_search_result_element(result))
+                                }
                                 
                             },
                             error: function(response) {
@@ -58,7 +73,7 @@
         </div>
         <div class="header-first" style="position:absolute;top:0;z-index: 0;left:0%; border-radius:0px;height:18%">
             {%for category in data%}
-            <div onmouseover="gray_it_out()" onmouseleave="white_it_out()" class="category-nav-bar">{{category.cat.name}} {%for subcat in category.subcat%}
+            <div  class="category-nav-bar">{{category.cat.name}} {%for subcat in category.subcat%}
                 <a href="{%url 'subcat_route' subcat.name%}" style="text-decoration: none;">
                     <div id={{subcat.name}} class="dropdown" style="position: relative;top:50%;left:-0%">{{subcat.name}}</div>
                     <div class="background" style="position: relative;margin-top:-50px;top:40%;">
