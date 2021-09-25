@@ -1,5 +1,3 @@
-# goodbooks
-A book reviewing website made from scratch by me using Django for backend 
-For now the service can handle creating categories and subcategories and book creation from the admin panel
-new functionalities will be added over time , the frontend design and color pallete were all done by me  my self and I , nothing is copied from anywhere
-Insipirations have been taken from websites like Digikala and Good Reads  
+A book reviewing website built by me using django for backend ,JQuery for Async Proccessing and standard templating languages
+For now the website supports Book reviewing , Account Creation ,Login , An unfinihsed Profile Page .
+The goal is to after completing all features , hook the website up to the Google Book API and make the product dynamically change
